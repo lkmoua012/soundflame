@@ -1,0 +1,8 @@
+Playlist Schema should be
+
+Name of Playlist
+	Song
+		Artist
+		Genre
+		Album
+		Year
