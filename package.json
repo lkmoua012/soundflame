@@ -2,6 +2,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mongoose": "^5.3.8"
+    "mongoose": "^5.3.8",
+    "node-spotify-api": "^1.0.7",
+    "nodemon": "^1.18.5"
   }
 }
