@@ -59,12 +59,12 @@ class App extends Component {
     console.log(jBody.artist);
 
     this.setState({ responseToPost: body });
-    this.setState({ result1artist: jBody.artist});
-    this.setState({ result1album: jBody.album});
-    this.setState({ result1songTitle: jBody.songTitle});
-    this.setState({ result1previewLink: jBody.previewLink});
-    this.setState({ result1thirty: jBody.thirty});
-    this.setState({ result1albumImg : jBody.albumImg});
+    this.setState({ result1artist: jBody.artist });
+    this.setState({ result1album: jBody.album });
+    this.setState({ result1songTitle: jBody.songTitle });
+    this.setState({ result1previewLink: jBody.previewLink });
+    this.setState({ result1thirty: jBody.thirty });
+    this.setState({ result1albumImg: jBody.albumImg });
 
   };
 
@@ -119,24 +119,23 @@ class App extends Component {
           <p>
             {this.state.responseToPost}
           </p>
-          
+
           <p>
             {this.state.result1artist}
-            <br/>
+            <br />
 
             {this.state.result1album}
-            <br/>
-
-            <img src={this.result1albumImg}></img>
-            <br/>
+            <br />
 
             {this.state.result1songTitle}
-            <br/>
+            <br />
 
             {this.state.result1previewLink}
-            <br/>
+            <br />
             <a href={this.state.result1thirty}>Play the Song!</a>
           </p>
+
+          <img src={this.result1albumImg}></img>
 
         </Container>
       </Container>

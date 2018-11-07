@@ -28,7 +28,7 @@ app.post('/api/world', (req, res) => {
         .search({ type: req.body.type, query: req.body.term, limit: '1' })
         .then(function (response) {
             // case for track, artist, and album, display different data
-            console.log(response.tracks.items[0].album.images[1])
+            console.log(response.tracks.items[0].album.images[0])
             //case for TRACK
             spotifyData = [
                 "Artist: " + response.tracks.items[0].album.artists[0].name,
