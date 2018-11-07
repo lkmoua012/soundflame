@@ -28,18 +28,28 @@ app.post('/api/world', (req, res) => {
         .search({ type: req.body.type, query: req.body.term, limit: '1' })
         .then(function (response) {
             // case for track, artist, and album, display different data
-
+            console.log(response.tracks.items[0].album.images[1])
             //case for TRACK
             spotifyData = [
                 "Artist: " + response.tracks.items[0].album.artists[0].name,
                 "Album: " + response.tracks.items[0].album.name,
                 "Song Title: " + response.tracks.items[0].name,
-                "Preview Link: " + response.tracks.items[0].external_urls.spotify
+                "Preview Link: " + response.tracks.items[0].external_urls.spotify,
+                "30 Second Preview: " + response.tracks.items[0].preview_url
             ]//.join("\n\n");
+
+            spotifyData2 = {
+                artist: response.tracks.items[0].album.artists[0].name,
+                album: response.tracks.items[0].album.name,
+                albumImg: response.tracks.items[0].album.images[0].url,
+                songTitle: response.tracks.items[0].name,
+                previewLink: response.tracks.items[0].external_urls.spotify,
+                thirty: response.tracks.items[0].preview_url
+            }
 
             spotify30 = response.tracks.items[0].preview_url
 
-            console.log(spotifyData);
+            // console.log(spotifyData);
 
             //case for ARTIST
 
@@ -48,30 +58,31 @@ app.post('/api/world', (req, res) => {
             //IF PREVIEW IS NULL
 
             if (spotify30 === null) {
-                res.send(`Unfortunately, a preview for this song is unavailable.`)
+                res.send(`Unfortunately, a preview for this song is unavailable.`);
             }
             else {
                 //ELSE
-                res.send(
+
+                //This is the App.js body
+                /*res.send(
                     `Searching for "${req.body.term}" with the filter "${req.body.type}... Preview Link"${spotify30}"`
-                );
-                /*res.format({
-                    'text/plain': function () {
-                        res.send('hey');
-                    },
+                );*/
 
-                    'text/html': function () {
-                        res.send('<p>hey</p>');
-                    },
+                res.json(spotifyData2);
 
-                    'application/json': function () {
-                        res.send({ message: 'hey' });
-                    },
+                /*res.json(
+                    {
+                        artist: response.tracks.items[0].album.artists[0].name,
 
-                    'default': function () {
-                        res.status(406).send('Not Acceptable');
+                        album: response.tracks.items[0].album.name,
+
+                        songTitle: response.tracks.items[0].name,
+
+                        previewLink: response.tracks.items[0].external_urls.spotify,
+
+                        thirty: response.tracks.items[0].preview_url
                     }
-                })*/
+                    );*/
 
             };
         })
@@ -92,6 +103,7 @@ mongoose
 // Use Routes
 app.use('/api/articles', articles);
 */
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`

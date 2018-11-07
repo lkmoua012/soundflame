@@ -7,13 +7,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: "Every Breath You Take",
+      searchTerm: "Toxic",
       searchType: "track",
       searchResults: [],
       spotlight: [],
       response: '',
       post: '',
       responseToPost: '',
+
+      result1artist: '',
+      result1album: '',
+      result1songTitle: '',
+      result1previewLink: '',
+      resultthirty: '',
+
     };
   };
 
@@ -45,10 +52,20 @@ class App extends Component {
     });
 
     const body = await response.text();
-    const result = await response.text();
 
-    console.log(result);
+    var jBody = JSON.parse(body);
+
+    console.log(jBody);
+    console.log(jBody.artist);
+
     this.setState({ responseToPost: body });
+    this.setState({ result1artist: jBody.artist});
+    this.setState({ result1album: jBody.album});
+    this.setState({ result1songTitle: jBody.songTitle});
+    this.setState({ result1previewLink: jBody.previewLink});
+    this.setState({ result1thirty: jBody.thirty});
+    this.setState({ result1albumImg : jBody.albumImg});
+
   };
 
   handleInputChange = event => {
@@ -101,6 +118,24 @@ class App extends Component {
 
           <p>
             {this.state.responseToPost}
+          </p>
+          
+          <p>
+            {this.state.result1artist}
+            <br/>
+
+            {this.state.result1album}
+            <br/>
+
+            <img src={this.result1albumImg}></img>
+            <br/>
+
+            {this.state.result1songTitle}
+            <br/>
+
+            {this.state.result1previewLink}
+            <br/>
+            <a href={this.state.result1thirty}>Play the Song!</a>
           </p>
 
         </Container>
