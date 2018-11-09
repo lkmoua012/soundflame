@@ -53,20 +53,33 @@ class App extends Component {
 
     const body = await response.text();
 
+    console.log(body);
+
+    if (body === "null") {
+      this.clearResults();
+    } else {
     var jBody = JSON.parse(body);
 
     console.log(jBody);
-    console.log(jBody.artist);
 
     this.setState({ responseToPost: body });
-    this.setState({ result1artist: jBody.artist });
-    this.setState({ result1album: jBody.album });
-    this.setState({ result1songTitle: jBody.songTitle });
-    this.setState({ result1previewLink: jBody.previewLink });
+    this.setState({ result1artist: 'Artist: ' + jBody.artist });
+    this.setState({ result1album: 'Album: ' + jBody.album });
+    this.setState({ result1songTitle: 'Song Ttitle: ' + jBody.songTitle });
+    this.setState({ result1previewLink: 'Preview Link: ' + jBody.previewLink });
     this.setState({ result1thirty: jBody.thirty });
     this.setState({ result1albumImg: jBody.albumImg });
-
+    }
   };
+
+  clearResults() {
+    this.setState({ result1artist: "Unfortunately, a preview for this song is unavailable." });
+    this.setState({ result1album: ''});
+    this.setState({ result1songTitle: ''});
+    this.setState({ result1previewLink: '' });
+    this.setState({ result1thirty: ''});
+    this.setState({ result1albumImg: '' });
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -110,34 +123,36 @@ class App extends Component {
           color="primary"
           size="lg">Submit</Button>
         <Container>
-
           <h3>Results</h3>
-          <p>
-            {this.state.response}
-          </p>
+          <div>
+            <p>
+              {this.state.response}
+            </p>
+          </div>
 
-          <p>
-            {this.state.responseToPost}
-          </p>
+          <div>
+            <img src={this.state.result1albumImg} alt='' style={{ height: 150 }} />
+          </div>
 
-          <p>
-            {this.state.result1artist}
-            <br />
+          <div>
+            <p>
+              {this.state.result1artist}
+              <br />
 
-            {this.state.result1album}
-            <br />
+              {this.state.result1album}
+              <br />
 
-            {this.state.result1songTitle}
-            <br />
+              {this.state.result1songTitle}
+              <br />
 
-            {this.state.result1previewLink}
-            <br />
-            <a href={this.state.result1thirty}>Play the Song!</a>
-          </p>
+              {this.state.result1previewLink}
 
-          <img src={this.result1albumImg}></img>
-
+              <br />
+              <a href={this.state.result1thirty}>Play the Song!</a>
+            </p>
+          </div>
         </Container>
+
       </Container>
     );
   }
