@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
-import { Container, Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap';
-import ReactPlayer from 'react-player';
+import {
+  Container,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Row,
+  Col,
+  Jumbotron,
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle
+} from 'reactstrap';
 
-require("dotenv").config();
+import ReactPlayer from 'react-player';
 
 class App extends Component {
 
@@ -22,18 +37,21 @@ class App extends Component {
       result1songTitle: '',
       result1previewLink: '',
       result1thirty: '',
+      result1exp: '',
 
       result2artist: '',
       result2album: '',
       result2songTitle: '',
       result2previewLink: '',
       result2thirty: '',
+      result2exp: '',
 
       result3artist: '',
       result3album: '',
       result3songTitle: '',
       result3previewLink: '',
       result3thirty: '',
+      result3exp: ''
 
     };
   };
@@ -67,37 +85,48 @@ class App extends Component {
 
     const body = await response.text();
 
-    console.log(body);
-
     if (body === "null") {
       this.clearResults();
     } else {
       var jBody = JSON.parse(body);
 
-      console.log(jBody);
-
       this.setState({ responseToPost: body });
 
-      this.setState({ result1artist: 'Artist: ' + jBody.artist1 });
-      this.setState({ result1album: 'Album: ' + jBody.album1 });
-      this.setState({ result1songTitle: 'Song Title: ' + jBody.songTitle1 });
-      this.setState({ result1previewLink: 'Song Link: ' + jBody.previewLink1 });
+      this.setState({ result1artist: jBody.artist1 });
+      this.setState({ result1album: jBody.album1 });
+      this.setState({ result1songTitle: jBody.songTitle1 });
+      this.setState({ result1previewLink: jBody.previewLink1 });
       this.setState({ result1thirty: jBody.thirty1 });
       this.setState({ result1albumImg: jBody.albumImg1 });
 
-      this.setState({ result2artist: 'Artist: ' + jBody.artist2 });
-      this.setState({ result2album: 'Album: ' + jBody.album2 });
-      this.setState({ result2songTitle: 'Song Title: ' + jBody.songTitle2 });
-      this.setState({ result2previewLink: 'Song Link: ' + jBody.previewLink2 });
+      this.setState({ result2artist: jBody.artist2 });
+      this.setState({ result2album: jBody.album2 });
+      this.setState({ result2songTitle: jBody.songTitle2 });
+      this.setState({ result2previewLink: jBody.previewLink2 });
       this.setState({ result2thirty: jBody.thirty2 });
       this.setState({ result2albumImg: jBody.albumImg2 });
 
-      this.setState({ result3artist: 'Artist: ' + jBody.artist3 });
-      this.setState({ result3album: 'Album: ' + jBody.album3 });
-      this.setState({ result3songTitle: 'Song Title: ' + jBody.songTitle3 });
-      this.setState({ result3previewLink: 'Song Link: ' + jBody.previewLink3 });
+      this.setState({ result3artist: jBody.artist3 });
+      this.setState({ result3album: jBody.album3 });
+      this.setState({ result3songTitle: jBody.songTitle3 });
+      this.setState({ result3previewLink: jBody.previewLink3 });
       this.setState({ result3thirty: jBody.thirty3 });
       this.setState({ result3albumImg: jBody.albumImg3 });
+
+      console.log(jBody.exp1);
+      console.log(this.state.result1exp);
+      
+      if (jBody.exp1 === "true") {
+        this.setState({ result1exp: '(Explicit)' });
+      };
+
+      if (jBody.exp2 === "true") {
+        this.setState({ result2exp: '(Explicit)' });
+      };
+
+      if (jBody.exp3 === "true") {
+        this.setState({ result3exp: '(Explicit)' });
+      };
 
     }
   };
@@ -110,20 +139,20 @@ class App extends Component {
     this.setState({ result1thirty: '' });
     this.setState({ result1albumImg: '' });
 
-    this.setState({ result2artist: ''})
+    this.setState({ result2artist: '' })
     this.setState({ result2album: '' });
     this.setState({ result2songTitle: '' });
     this.setState({ result2previewLink: '' });
     this.setState({ result2thirty: '' });
     this.setState({ result2albumImg: '' });
 
-    this.setState({ result3artist: ''})
+    this.setState({ result3artist: '' })
     this.setState({ result3album: '' });
     this.setState({ result3songTitle: '' });
     this.setState({ result3previewLink: '' });
     this.setState({ result3thirty: '' });
     this.setState({ result3albumImg: '' });
-    
+
   }
 
   handleInputChange = event => {
@@ -136,7 +165,9 @@ class App extends Component {
   render() {
     return (
       <Container>
-        <h2>Welcome to Soundflame</h2>
+        <Jumbotron>
+          <h2>Welcome to Soundflame <i class="fas fa-music"></i> <i class="fas fa-fire"></i></h2>
+        </Jumbotron>
         <Form>
           <FormGroup>
             <Label for="searchTerm">Search</Label>
@@ -173,83 +204,70 @@ class App extends Component {
 
           <Row>
             <Col sm="4">
-
-              <div>
-                <img src={this.state.result1albumImg} alt='' style={{ height: 150 }} />
-              </div>
-
-              <div>
-                <p>
-                  {this.state.result1artist}
-                  <br />
-
-                  {this.state.result1album}
-                  <br />
-
-                  {this.state.result1songTitle}
-                  <br />
-
-                  {this.state.result1previewLink}
-                  <ReactPlayer
-                  className='react-player'
-                  url={this.state.result1thirty}
-                  width= '100%'
-                  height= '50px'
-                  controls/>
-                </p>
-              </div>
+              <Card>
+                <CardImg top width="75%" src={this.state.result1albumImg} alt='' style={{ height: 300 }} />
+                <CardBody>
+                  <CardTitle>{this.state.result1songTitle}{this.state.result1exp}</CardTitle>
+                  <CardSubtitle>
+                    {this.state.result1artist}
+                    <br />
+                    {this.state.result1album}
+                  </CardSubtitle>
+                  <CardText>
+                    {this.state.result1previewLink}
+                    <ReactPlayer
+                      className='react-player'
+                      url={this.state.result1thirty}
+                      width='100%'
+                      height='50px'
+                      controls />
+                  </CardText>
+                </CardBody>
+              </Card>
             </Col>
             <Col sm="4">
-              <div>
-                <img src={this.state.result2albumImg} alt='' style={{ height: 150 }} />
-              </div>
-
-              <div>
-                <p>
-                  {this.state.result2artist}
-                  <br />
-
-                  {this.state.result2album}
-                  <br />
-
-                  {this.state.result2songTitle}
-                  <br />
-
-                  {this.state.result2previewLink}
-                  <ReactPlayer
-                  className='react-player'
-                  url={this.state.result2thirty}
-                  width= '100%'
-                  height= '50px'
-                  controls/>
-                </p>
-              </div>
+              <Card>
+                <CardImg top width="75%" src={this.state.result2albumImg} alt='' style={{ height: 300 }} />
+                <CardBody>
+                  <CardTitle>{this.state.result2songTitle}{this.state.result2exp}</CardTitle>
+                  <CardSubtitle>
+                    {this.state.result2artist}
+                    <br />
+                    {this.state.result2album}
+                  </CardSubtitle>
+                  <CardText>
+                    {this.state.result2previewLink}
+                    <ReactPlayer
+                      className='react-player'
+                      url={this.state.result2thirty}
+                      width='100%'
+                      height='50px'
+                      controls />
+                  </CardText>
+                </CardBody>
+              </Card>
             </Col>
             <Col sm="4">
-              <div>
-                <img src={this.state.result3albumImg} alt='' style={{ height: 150 }} />
-              </div>
-
-              <div>
-                <p>
-                  {this.state.result3artist}
-                  <br />
-
-                  {this.state.result3album}
-                  <br />
-
-                  {this.state.result3songTitle}
-                  <br />
-
-                  {this.state.result3previewLink}
-                  <ReactPlayer
-                  className='react-player'
-                  url={this.state.result3thirty}
-                  width= '100%'
-                  height= '50px'
-                  controls/>
-                </p>
-              </div>
+              <Card>
+                <CardImg top width="75%" src={this.state.result3albumImg} alt='' style={{ height: 300 }} />
+                <CardBody>
+                  <CardTitle>{this.state.result3songTitle}{this.state.result3exp}</CardTitle>
+                  <CardSubtitle>
+                    {this.state.result3artist}
+                    <br />
+                    {this.state.result3album}
+                  </CardSubtitle>
+                  <CardText>
+                    {this.state.result3previewLink}
+                    <ReactPlayer
+                      className='react-player'
+                      url={this.state.result3thirty}
+                      width='100%'
+                      height='50px'
+                      controls />
+                  </CardText>
+                </CardBody>
+              </Card>
             </Col>
           </Row>
         </Container>

@@ -14,6 +14,7 @@ var redirect_uri = 'http://localhost:8888/callback';
 var spotifyData;
 var spotify30;
 const Spotify = require('node-spotify-api');
+
 let spotify = new Spotify({
     id: process.env.SPOTIFY_ID,
     secret: process.env.SPOTIFY_SECRET
@@ -178,6 +179,7 @@ app.post('/api/world', (req, res) => {
                     songTitle1: response.tracks.items[0].name,
                     previewLink1: response.tracks.items[0].external_urls.spotify,
                     thirty1: response.tracks.items[0].preview_url,
+                    exp1: response.tracks.items[0].explicit,
 
                     artist2: response.tracks.items[1].album.artists[0].name,
                     album2: response.tracks.items[1].album.name,
@@ -185,14 +187,18 @@ app.post('/api/world', (req, res) => {
                     songTitle2: response.tracks.items[1].name,
                     previewLink2: response.tracks.items[1].external_urls.spotify,
                     thirty2: response.tracks.items[1].preview_url,
+                    exp2: response.tracks.items[1].explicit,
 
                     artist3: response.tracks.items[2].album.artists[0].name,
                     album3: response.tracks.items[2].album.name,
                     albumImg3: response.tracks.items[2].album.images[1].url,
                     songTitle3: response.tracks.items[2].name,
                     previewLink3: response.tracks.items[2].external_urls.spotify,
-                    thirty3: response.tracks.items[2].preview_url
-                }
+                    thirty3: response.tracks.items[2].preview_url,
+                    exp3: response.tracks.items[2].explicit,
+                };
+
+                console.log(spotifyData);
 
                 spotify30 = response.tracks.items[0].preview_url
 
