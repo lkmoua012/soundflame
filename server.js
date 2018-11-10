@@ -151,43 +151,68 @@ app.post('/api/world', (req, res) => {
     console.log(req.body);
 
     spotify
-        .search({ type: req.body.type, query: req.body.term, limit: '1' })
+        .search({ type: req.body.type, query: req.body.term, limit: '3' })
         .then(function (response) {
             // case for track, artist, and album, display different data
             //case for TRACK
 
-            spotifyData = {
-                artist: response.tracks.items[0].album.artists[0].name,
-                album: response.tracks.items[0].album.name,
-                albumImg: response.tracks.items[0].album.images[1].url,
-                songTitle: response.tracks.items[0].name,
-                previewLink: response.tracks.items[0].external_urls.spotify,
-                thirty: response.tracks.items[0].preview_url
-            }
+            switch (req.body.type) {
+                case "track":
+                    searchTrack();
+                    break;
+                case "artist":
+                    searchArtist();
+                    break;
+                case "album":
+                    searchAlbum();
+                    break;
+            };
 
-            spotify30 = response.tracks.items[0].preview_url
+            function searchTrack() {
 
-            //case for ARTIST
+                spotifyData = {
+                    artist1: response.tracks.items[0].album.artists[0].name,
+                    album1: response.tracks.items[0].album.name,
+                    albumImg1: response.tracks.items[0].album.images[1].url,
+                    songTitle1: response.tracks.items[0].name,
+                    previewLink1: response.tracks.items[0].external_urls.spotify,
+                    thirty1: response.tracks.items[0].preview_url,
 
-            //case for ALBUM
+                    artist2: response.tracks.items[1].album.artists[0].name,
+                    album2: response.tracks.items[1].album.name,
+                    albumImg2: response.tracks.items[1].album.images[1].url,
+                    songTitle2: response.tracks.items[1].name,
+                    previewLink2: response.tracks.items[1].external_urls.spotify,
+                    thirty2: response.tracks.items[1].preview_url,
 
-            //IF PREVIEW IS NULL
+                    artist3: response.tracks.items[2].album.artists[0].name,
+                    album3: response.tracks.items[2].album.name,
+                    albumImg3: response.tracks.items[2].album.images[1].url,
+                    songTitle3: response.tracks.items[2].name,
+                    previewLink3: response.tracks.items[2].external_urls.spotify,
+                    thirty3: response.tracks.items[2].preview_url
+                }
 
-            if (spotify30 === null) {
-                res.send("null");
-                // res.send(`Unfortunately, a preview for this song is unavailable.`);
-            }
-            else {
-                //ELSE
+                spotify30 = response.tracks.items[0].preview_url
 
-                //This is the App.js body
-                /*res.send(
-                    `Searching for "${req.body.term}" with the filter "${req.body.type}... Preview Link"${spotify30}"`
-                );*/
+                if (spotify30 === null) {
+                    res.send("null");
+                }
 
-                res.json(spotifyData);
+                else {
+                    res.json(spotifyData);
+                };
 
             };
+
+            function searchArtist() {
+                console.log(response.artists.items);
+            };
+
+            function searchAlbum() {
+                console.log(response.albums.items);
+            }
+
         })
         .catch(function (err) {
             console.log(err)

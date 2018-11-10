@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap';
+import ReactPlayer from 'react-player';
+
 require("dotenv").config();
 
 class App extends Component {
@@ -7,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: "Toxic",
+      searchTerm: "Lil Touch",
       searchType: "track",
       searchResults: [],
       spotlight: [],
@@ -19,7 +21,19 @@ class App extends Component {
       result1album: '',
       result1songTitle: '',
       result1previewLink: '',
-      resultthirty: '',
+      result1thirty: '',
+
+      result2artist: '',
+      result2album: '',
+      result2songTitle: '',
+      result2previewLink: '',
+      result2thirty: '',
+
+      result3artist: '',
+      result3album: '',
+      result3songTitle: '',
+      result3previewLink: '',
+      result3thirty: '',
 
     };
   };
@@ -58,27 +72,58 @@ class App extends Component {
     if (body === "null") {
       this.clearResults();
     } else {
-    var jBody = JSON.parse(body);
+      var jBody = JSON.parse(body);
 
-    console.log(jBody);
+      console.log(jBody);
 
-    this.setState({ responseToPost: body });
-    this.setState({ result1artist: 'Artist: ' + jBody.artist });
-    this.setState({ result1album: 'Album: ' + jBody.album });
-    this.setState({ result1songTitle: 'Song Ttitle: ' + jBody.songTitle });
-    this.setState({ result1previewLink: 'Preview Link: ' + jBody.previewLink });
-    this.setState({ result1thirty: jBody.thirty });
-    this.setState({ result1albumImg: jBody.albumImg });
+      this.setState({ responseToPost: body });
+
+      this.setState({ result1artist: 'Artist: ' + jBody.artist1 });
+      this.setState({ result1album: 'Album: ' + jBody.album1 });
+      this.setState({ result1songTitle: 'Song Title: ' + jBody.songTitle1 });
+      this.setState({ result1previewLink: 'Song Link: ' + jBody.previewLink1 });
+      this.setState({ result1thirty: jBody.thirty1 });
+      this.setState({ result1albumImg: jBody.albumImg1 });
+
+      this.setState({ result2artist: 'Artist: ' + jBody.artist2 });
+      this.setState({ result2album: 'Album: ' + jBody.album2 });
+      this.setState({ result2songTitle: 'Song Title: ' + jBody.songTitle2 });
+      this.setState({ result2previewLink: 'Song Link: ' + jBody.previewLink2 });
+      this.setState({ result2thirty: jBody.thirty2 });
+      this.setState({ result2albumImg: jBody.albumImg2 });
+
+      this.setState({ result3artist: 'Artist: ' + jBody.artist3 });
+      this.setState({ result3album: 'Album: ' + jBody.album3 });
+      this.setState({ result3songTitle: 'Song Title: ' + jBody.songTitle3 });
+      this.setState({ result3previewLink: 'Song Link: ' + jBody.previewLink3 });
+      this.setState({ result3thirty: jBody.thirty3 });
+      this.setState({ result3albumImg: jBody.albumImg3 });
+
     }
   };
 
   clearResults() {
     this.setState({ result1artist: "Unfortunately, a preview for this song is unavailable." });
-    this.setState({ result1album: ''});
-    this.setState({ result1songTitle: ''});
+    this.setState({ result1album: '' });
+    this.setState({ result1songTitle: '' });
     this.setState({ result1previewLink: '' });
-    this.setState({ result1thirty: ''});
+    this.setState({ result1thirty: '' });
     this.setState({ result1albumImg: '' });
+
+    this.setState({ result2artist: ''})
+    this.setState({ result2album: '' });
+    this.setState({ result2songTitle: '' });
+    this.setState({ result2previewLink: '' });
+    this.setState({ result2thirty: '' });
+    this.setState({ result2albumImg: '' });
+
+    this.setState({ result3artist: ''})
+    this.setState({ result3album: '' });
+    this.setState({ result3songTitle: '' });
+    this.setState({ result3previewLink: '' });
+    this.setState({ result3thirty: '' });
+    this.setState({ result3albumImg: '' });
+    
   }
 
   handleInputChange = event => {
@@ -122,35 +167,91 @@ class App extends Component {
           onClick={this.handleSubmit}
           color="primary"
           size="lg">Submit</Button>
+
         <Container>
           <h3>Results</h3>
-          <div>
-            <p>
-              {this.state.response}
-            </p>
-          </div>
 
-          <div>
-            <img src={this.state.result1albumImg} alt='' style={{ height: 150 }} />
-          </div>
+          <Row>
+            <Col sm="4">
 
-          <div>
-            <p>
-              {this.state.result1artist}
-              <br />
+              <div>
+                <img src={this.state.result1albumImg} alt='' style={{ height: 150 }} />
+              </div>
 
-              {this.state.result1album}
-              <br />
+              <div>
+                <p>
+                  {this.state.result1artist}
+                  <br />
 
-              {this.state.result1songTitle}
-              <br />
+                  {this.state.result1album}
+                  <br />
 
-              {this.state.result1previewLink}
+                  {this.state.result1songTitle}
+                  <br />
 
-              <br />
-              <a href={this.state.result1thirty}>Play the Song!</a>
-            </p>
-          </div>
+                  {this.state.result1previewLink}
+                  <ReactPlayer
+                  className='react-player'
+                  url={this.state.result1thirty}
+                  width= '100%'
+                  height= '50px'
+                  controls/>
+                </p>
+              </div>
+            </Col>
+            <Col sm="4">
+              <div>
+                <img src={this.state.result2albumImg} alt='' style={{ height: 150 }} />
+              </div>
+
+              <div>
+                <p>
+                  {this.state.result2artist}
+                  <br />
+
+                  {this.state.result2album}
+                  <br />
+
+                  {this.state.result2songTitle}
+                  <br />
+
+                  {this.state.result2previewLink}
+                  <ReactPlayer
+                  className='react-player'
+                  url={this.state.result2thirty}
+                  width= '100%'
+                  height= '50px'
+                  controls/>
+                </p>
+              </div>
+            </Col>
+            <Col sm="4">
+              <div>
+                <img src={this.state.result3albumImg} alt='' style={{ height: 150 }} />
+              </div>
+
+              <div>
+                <p>
+                  {this.state.result3artist}
+                  <br />
+
+                  {this.state.result3album}
+                  <br />
+
+                  {this.state.result3songTitle}
+                  <br />
+
+                  {this.state.result3previewLink}
+                  <ReactPlayer
+                  className='react-player'
+                  url={this.state.result3thirty}
+                  width= '100%'
+                  height= '50px'
+                  controls/>
+                </p>
+              </div>
+            </Col>
+          </Row>
         </Container>
 
       </Container>
