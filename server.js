@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 // const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -6,16 +7,16 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = 'cfa198b280274ae3ad5f8103845ad09d';
-var client_secret = 'feeb01e81dd34a99b7a9c5c37eedd5f9';
+var client_id = process.env.SPOTIFY_ID;
+var client_secret = process.env.SPOTIFY_SECRET;
 var redirect_uri = 'http://localhost:8888/callback';
+
 var spotifyData;
 var spotify30;
-
 const Spotify = require('node-spotify-api');
 let spotify = new Spotify({
-    id: "cfa198b280274ae3ad5f8103845ad09d",
-    secret: "feeb01e81dd34a99b7a9c5c37eedd5f9"
+    id: process.env.SPOTIFY_ID,
+    secret: process.env.SPOTIFY_SECRET
 });
 
 var generateRandomString = function (length) {
