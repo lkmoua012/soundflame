@@ -16,6 +16,7 @@ import {
   CardTitle,
   CardSubtitle
 } from 'reactstrap';
+import axios from 'axios';
 
 import ReactPlayer from 'react-player';
 
@@ -60,7 +61,67 @@ class App extends Component {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
       .catch(err => console.log(err));
-  }
+    this.getDataFromDb();
+    if (!this.state.intervalIsSet) {
+      let interval = setInterval(this.getDataFromDb, 1000);
+      this.setState({ intervalIsSet: interval });
+    }
+  };
+
+  componentWillUnmount() {
+    if (this.state.intervalIsSet) {
+      clearInterval(this.state.intervalIsSet);
+      this.setState({ intervalIsSet: null });
+    }
+  };
+
+  getDataFromDb = () => {
+    fetch("/api/getData")
+      .then(data => data.json())
+      .then(res => this.setState({ data: res.data }));
+  };
+
+  putDataToDb = message => {
+    let currentIds = this.state.data.map(data => data.id);
+    let idToBeAdded = 0;
+    while (currentIds.includes(idToBeAdded)) {
+      ++idToBeAdded;
+    }
+
+    axios.post("/api/putData", {
+      id: idToBeAdded,
+      message: message
+    });
+  };
+
+  deleteFromDB = idTodelete => {
+    let objIdToDelete = null;
+    this.state.data.forEach(dat => {
+      if (dat.id == idTodelete) {
+        objIdToDelete = dat._id;
+      }
+    });
+
+    axios.delete("/api/dleteData", {
+      data: {
+        id: objIdToDelete
+      }
+    });
+  };
+
+  updateDB = (idToUpdate, updateToApply) => {
+    let objIdToUpdate = null;
+    this.state.data.forEach(dat => {
+      if (dat.id == idToUpdate) {
+        objIdToUpdate = dat._id;
+      }
+    });
+
+    axios.post("/api/updateData", {
+      id: objIdToUpdate,
+      update: { message: updateToApply }
+    });
+  };
 
   callApi = async () => {
     const response = await fetch('/api/hello');
@@ -115,7 +176,7 @@ class App extends Component {
 
       console.log(jBody.exp1);
       console.log(this.state.result1exp);
-      
+
       if (jBody.exp1 === "true") {
         this.setState({ result1exp: '(Explicit)' });
       };
