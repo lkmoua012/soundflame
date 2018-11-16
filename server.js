@@ -39,7 +39,7 @@ const app = express();
 
 // DB Config
 // const db = require('./config/keys').mongoURI;
-const dbRoute = "mongodb://larry:admin123@ds159273.mlab.com:59273/soundflame"
+const dbRoute = process.env.MONGOLAB_URI;
 
 mongoose.connect(
     dbRoute,
