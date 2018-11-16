@@ -25,10 +25,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
+      data: [],
+      id: 0,
+      message: null,
+      intervalIsSet: false,
+      idToDelete: null,
+      idToUpdate: null,
+      objectToUpdate: null,
+
       searchTerm: "Thriller",
       searchType: "track",
-      searchResults: [],
-      spotlight: [],
       response: '',
       post: '',
       responseToPost: '',
@@ -97,12 +104,12 @@ class App extends Component {
   deleteFromDB = idTodelete => {
     let objIdToDelete = null;
     this.state.data.forEach(dat => {
-      if (dat.id == idTodelete) {
+      if (dat.id === idTodelete) {
         objIdToDelete = dat._id;
       }
     });
 
-    axios.delete("/api/dleteData", {
+    axios.delete("/api/deleteData", {
       data: {
         id: objIdToDelete
       }
@@ -112,7 +119,7 @@ class App extends Component {
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
     this.state.data.forEach(dat => {
-      if (dat.id == idToUpdate) {
+      if (dat.id === idToUpdate) {
         objIdToUpdate = dat._id;
       }
     });
@@ -224,6 +231,7 @@ class App extends Component {
   };
 
   render() {
+    const { data } = this.state;
     return (
       <Container>
         <Jumbotron>
@@ -333,7 +341,54 @@ class App extends Component {
           </Row>
         </Container>
 
+        <div>
+          <h3>Saved Songs</h3>
+          <ul>
+            {data.length <= 0
+              ? "No songs yet saved."
+              : data.map(dat => (
+                <li style={{ padding: "10px" }} key={data.message}>
+                  <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
+                  <span style={{ color: "gray" }}> data: </span>
+                  {dat.message}
+                </li>
+              ))}
+          </ul>
+          <div style={{ padding: "10px" }}>
+            <button onClick={() => this.putDataToDb(
+              "\nSong: " + this.state.result1songTitle +
+              " ---\nArtist: " + this.state.result1artist +
+              " ---\nAlbum: " + this.state.result1album)}>
+              SAVE 1
+          </button>
+          <button onClick={() => this.putDataToDb(
+              "\nSong: " + this.state.result2songTitle +
+              " ---\nArtist: " + this.state.result2artist +
+              " ---\nAlbum: " + this.state.result2album)}>
+              SAVE 2
+          </button>
+          <button onClick={() => this.putDataToDb(
+              "\nSong: " + this.state.result3songTitle +
+              " ---\nArtist: " + this.state.result3artist +
+              " ---\nAlbum: " + this.state.result3album)}>
+              SAVE 3
+          </button>
+          </div>
+          <div style={{ padding: "10px" }}>
+            <input
+              type="text"
+              style={{ width: "200px" }}
+              onChange={e => this.setState({ idToDelete: e.target.value })}
+              placeholder="put id of item to delete here"
+            />
+            <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+              DELETE
+          </button>
+          </div>
+        </div>
+
       </Container>
+
     );
   }
 }
