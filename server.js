@@ -10,7 +10,7 @@ const Data = require('./data');
 
 var client_id = process.env.SPOTIFY_ID;
 var client_secret = process.env.SPOTIFY_SECRET;
-var redirect_uri = 'http://localhost:8888/callback';
+var redirect_uri = 'https://lit-basin-82430.herokuapp.com/callback';
 
 const router = express.Router();
 
