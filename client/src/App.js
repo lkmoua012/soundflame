@@ -17,13 +17,14 @@ import {
   CardSubtitle
 } from 'reactstrap';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import ReactPlayer from 'react-player';
 
 class App extends Component {
 
   static propTypes = {
-    children: this.propTypes.node
+    children: PropTypes.node
   }
 
   constructor(props) {
@@ -236,6 +237,7 @@ class App extends Component {
 
   render() {
     const { data } = this.state;
+    const { children } = this.props;
     return (
       <Container>
         <Jumbotron>

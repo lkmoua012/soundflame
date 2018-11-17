@@ -1,4 +1,8 @@
 {
+  "engines": {
+    "node": "8.11.2",
+    "express": "6.3.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
