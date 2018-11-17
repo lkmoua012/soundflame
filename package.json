@@ -15,5 +15,24 @@
     "nodemon": "^1.18.5",
     "querystring": "^0.2.0",
     "request": "^2.88.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "soundflame",
+  "description": "",
+  "version": "1.0.0",
+  "main": "data.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lkmoua012/soundflame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lkmoua012/soundflame/issues"
+  },
+  "homepage": "https://github.com/lkmoua012/soundflame#readme"
 }
