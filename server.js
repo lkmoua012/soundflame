@@ -6,6 +6,8 @@ var request = require('request');
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+
+const path = require('path');
 const Data = require('./data');
 
 var client_id = process.env.SPOTIFY_ID;
@@ -295,12 +297,10 @@ router.post("/putData", (req, res) => {
 
 app.use("/api", router);
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('./client/build'));
-};
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.get('*', (request, response) => {
-    response.sendFile(path.join(__dirname, './client/build', 'index.html'));
+    response.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 const port = process.env.PORT || 8888;
