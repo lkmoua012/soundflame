@@ -22,6 +22,10 @@ import ReactPlayer from 'react-player';
 
 class App extends Component {
 
+  static propTypes = {
+    children: this.propTypes.node
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -387,6 +391,9 @@ class App extends Component {
           </div>
         </div>
 
+        <div>
+          {children}
+        </div>
       </Container>
 
     );
