@@ -123,7 +123,7 @@ app.get('/callback', function (req, res) {
                     console.log(body);
                 });
 
-                res.redirect('http://localhost:3000');
+                res.redirect('https://lit-basin-82430.herokuapp.com/callback');
 
                 // we can also pass the token to the browser to make requests from there
                 /*res.redirect('http://localhost:3000/#' +
